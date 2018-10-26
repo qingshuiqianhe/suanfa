@@ -1,3 +1,4 @@
+# coding:utf-8
 # 直接选择排序算法
 
 
@@ -25,6 +26,8 @@ def select_sort2(lists):
                 min = j
         lists[min], lists[i] = lists[i], lists[min]
     return lists
+
+
 A = [5, 2, 4, 9, 3, 6, 8, 7]
 a = select_sort(A)
 b = select_sort2(A)
