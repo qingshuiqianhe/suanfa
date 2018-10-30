@@ -3,6 +3,7 @@
 
 
 class LNode:
+    """结点"""
     def __init__(self, elem, next=None):
         self.elem = elem
         self.next = None
@@ -13,6 +14,7 @@ class LinkedListUnderflow(ValueError):
 
 
 class List:
+    """单链表"""
 
     def __init__(self):
         self._head = None
@@ -90,9 +92,10 @@ class List:
 
 
 class List1(List):
+    """优化尾部插入"""
     def __init__(self):
         List.__init__(self)
-        self._rear = None
+        self._rear = None  # 尾结点引用域
 
     def prepend(self, elem):
         if self._head is None:
@@ -284,6 +287,64 @@ def list_sort(lst):
         lst[j] = x
 
 
+"""循环双链表"""
+
+
+class DLCirList(DLList):
+
+    def is_empty(self):
+        if self._head is None:
+            return
+
+    def append(self, elem):
+        if self._head is None:
+            self._head = DLnode(elem)
+        p = self._head
+        while self._head is not None:
+            q = self._head.next
+        q.next = DLnode(elem, q.next, p.next)
+
+    def pop(self):
+        if self._head is None:
+            raise LinkedListUnderflow('error in dlclist pop')
+        e = self._head.elem
+        if self._head.next is None:
+            return e
+        prev = self._head.prev
+        prev.next = self._head
+        self._head.next = prev.elem
+
+    def prepend(self, elem):
+        if self._head is None:
+            self._head = DLnode(elem)
+        p = self._head
+        while self._head is not None:
+            q = self._head.next
+        DLnode(elem, q, p)
+
+
+"""josephus, 转圈报数出局问题"""
+
+
+def josephus_A(n, k, m):
+    people = list(range(2, n+1))
+    i = k-1
+    for num in range(n):
+        count = 0
+        while count < m:
+            if people[i] > 0:
+                count += 1
+            if count == m:
+                print people[i], ''
+                people[i] = 0
+            i = (i+1) % n
+        if num < n -1:
+            print ','
+        else:
+            print ''
+    return
+
+
 if __name__ == '__main__':
     ss = List1()
     ss.prepend(99)
@@ -292,6 +353,7 @@ if __name__ == '__main__':
 
     for x in ss.filter(lambda y: y % 2 == 0):
         print x
+    ss.find()
 
 
 
